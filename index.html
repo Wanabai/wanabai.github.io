@@ -27,11 +27,39 @@
     padding: 2rem 1rem;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    position: relative;
+    overflow-x: hidden;
   }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 2px,
+      rgba(0, 0, 0, 0.035) 2px,
+      rgba(0, 0, 0, 0.035) 3px
+    );
+    pointer-events: none;
+    z-index: 1;
+    mix-blend-mode: multiply;
+  }
+  main { position: relative; z-index: 2; }
   @media (prefers-color-scheme: dark) {
     body { background: #0a0a0a; color: #e5e5e5; }
-    a { color: #9ecbff; }
-    a:visited { color: #c9a0ff; }
+    body::before {
+      background: repeating-linear-gradient(
+        to bottom,
+        transparent 0,
+        transparent 2px,
+        rgba(255, 255, 255, 0.04) 2px,
+        rgba(255, 255, 255, 0.04) 3px
+      );
+      mix-blend-mode: screen;
+    }
+    a { color: #ffb000; }
+    a:visited { color: #d98e00; }
   }
   main {
     max-width: 560px;
@@ -43,6 +71,18 @@
     font-weight: 700;
     letter-spacing: -0.01em;
     margin-bottom: 0.25rem;
+  }
+  .cursor {
+    display: inline-block;
+    animation: blink 1.06s steps(2, start) infinite;
+    margin-left: 0.05em;
+    font-weight: 400;
+  }
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cursor { animation: none; }
   }
   .tagline {
     font-size: 1rem;
@@ -80,12 +120,13 @@
     opacity: 0.4;
   }
   a {
-    color: #0645ad;
+    color: #b8860b;
     text-decoration: none;
     border-bottom: 1px solid transparent;
     transition: border-color 0.15s ease;
   }
   a:hover { border-bottom-color: currentColor; }
+  a:visited { color: #9c7307; }
   .meta {
     font-size: 0.75rem;
     opacity: 0.5;
@@ -100,7 +141,7 @@
 </head>
 <body>
 <main>
-  <h1>wanabai</h1>
+  <h1>wanabai<span class="cursor" aria-hidden="true">_</span></h1>
   <p class="tagline">software as electricity</p>
   <p class="pronunciation">wah-na-bye — from "wannabe AI"</p>
 
